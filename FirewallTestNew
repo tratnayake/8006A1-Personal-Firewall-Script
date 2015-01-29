@@ -1,0 +1,117 @@
+#!/bin/bash
+
+date=date
+filename="Logfile$date.txt"
+
+function startTestPrompt {
+	echo "Press any key to START TEST $1 (START YOUR WIRESHARK CAP)"
+	read anykey
+	echo "START Test $1" >> $filename
+	echo iptables -L -v -x -n >> $filename
+
+}
+
+function endTestPrompt {
+	echo "Press any key to END TEST $1 (STOP AND SAVE YOUR WIRESHARK CAP)"
+	read anykey
+	echo "END Test $1" >> $filename
+	echo iptables -L -v -x -n >> $filename
+}
+
+function installPackages {
+
+	yum  -y install hping3
+
+	yum -y install sshpass
+
+	yum -y install httpd
+
+	echo "Packages installed"
+}
+
+function testDHCP {
+
+	startTestPrompt "$1: Allow Inbound/Outbound DHCP" 
+
+
+
+	ifconfig em1
+
+	echo "Releasing DHCP"
+	dhclient -r
+
+	sleep 3
+
+	echo "DHCP released"
+	ifconfig em1 
+
+	echo
+	echo "Getting new IP address"
+	dhclient
+
+	sleep 2
+
+	ifconfig em1
+
+	endTestPrompt "$1: Allow Inbound/Outbound DHCP" 
+}
+
+
+
+clear
+echo "PLEASE MAKESURE YOU RUN THIS AS ROOT"
+
+
+
+echo
+
+#SETTING UP IPS
+
+echo "What is the name of your Firewall script?"
+
+read firewallscript
+
+echo "What is the name of your RESET  Firewall script?"
+
+read resetfirewallscript
+
+sh $resetfirewallscript
+
+echo "What is the IP of the machine you will be using to SSH into? 192.168.0.XX"
+
+read remote
+
+remoteIP="192.168.0.$remote"
+
+echo "What is the IP of YOUR machine? 192.168.0.XX"
+
+read loc
+
+localIP="192.168.0.$loc"
+
+## IPS FINISHED
+
+echo "The remote IP to connect to is $remoteIP"
+
+echo "The IP of the remote machine you will be using to SSH into is $remoteIP"
+
+
+
+installPackages
+
+# START FIREWALL
+sh $firewallscript
+
+
+testDHCP 1
+
+#sh ResetFirewall.sh
+
+
+
+
+
+
+
+
+

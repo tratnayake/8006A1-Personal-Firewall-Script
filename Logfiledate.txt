@@ -1,0 +1,2224 @@
+START Test 1: Allow Inbound/Outbound DHCP
+Chain INPUT (policy ACCEPT 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+END Test 1: Allow Inbound/Outbound DHCP
+Chain INPUT (policy ACCEPT 16 packets, 4023 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 18 packets, 3527 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+START Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       2     1208 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       2     1208 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       5     3020 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       5     3020 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3B: DONT ALLOW outbound SSH from a non-ssh PORT
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       5     3020 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       5     3020 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       3     1536 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3     1536 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       4     2140 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       4     2140 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3B: DONT ALLOW outbound SSH from a non-ssh PORT
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       5     2744 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       5     2744 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 3B: DONT allow outbound SSH from a non-ssh PORT
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       6     3348 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      22     4049 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      27     3937 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       6     3348 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      22     4049 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      27     3937 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3C: DONT ALLOW outbound SSH from a non-ssh PORT
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       6     3348 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      22     4049 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      27     3937 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       6     3348 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      22     4049 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      27     3937 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 3C: DONT allow outbound SSH from a non-ssh PORT
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       6     3348 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+      10      400 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      39     8026 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 2 packets, 656 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      46     7610 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       5      220 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       6     3348 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      49     8426 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      51     7830 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       1      328 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 80 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1      328 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       1      328 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 80 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1      328 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3B: Allow inbound SSH to a host
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       1      328 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 80 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1      328 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 3B: Allow inbound SSH to a host
+Chain INPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       1      328 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      34     7162 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 80 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      34     7106 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1      328 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      34     7162 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      34     7106 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 3A: Allow outbound SSH to a host
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 3B: Allow inbound SSH to a host
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+      17     3829 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+      17     3537 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3829 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      17     3537 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 4A: Allow outbound HTTP
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       1      604 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 328 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1      604 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 4A: Allow outbound HTTP
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1      140 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       2     1208 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       5      220 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 2 packets, 656 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1       60 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+      10      400 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       5      220 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      10      400 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3     1348 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1       60 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 4A: Allow inbound HTTP
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1      140 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+      10     5764 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       5      220 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 13 packets, 4264 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1       60 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+      10      400 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       5      220 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      10      400 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      11     5904 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       1       60 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 1: Allow Inbound/Outbound DHCP
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 1 packets, 76 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 1: Allow Inbound/Outbound DHCP
+Chain INPUT (policy DROP 1 packets, 48 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      428 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+      13     4883 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 8 packets, 888 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      199 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+      14     1374 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      13     4883 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      14     1374 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      428 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      199 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 1: Allow Inbound/Outbound DHCP
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 1: Allow Inbound/Outbound DHCP
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      428 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:68
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:68
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+      14     5713 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 9 packets, 1248 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      199 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:68
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:68
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+      16     1682 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      14     5713 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      16     1682 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      428 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (4 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      199 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+START Test 1: Allow Inbound/Outbound DHCP
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+END Test 1: Allow Inbound/Outbound DHCP
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      428 OTHERIN    udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp spt:53
+       0        0 OTHERIN    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:53
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHIN      tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHIN      udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+       0        0 CUSTOMDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:!1:1023 dpt:80
+       0        0 HTTPDENYIN  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spts:1:1023 dpt:80
+      13     5623 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+       0        0 HTTPIN     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 9 packets, 1248 bytes)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      199 OTHEROUT   udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53
+       0        0 OTHEROUT   tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+       0        0 SSHOUT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22
+       0        0 SSHOUT     udp  --  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:22
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:0
+       0        0 CUSTOMDENYOUT  tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:0
+      15     1642 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport dports 80,443
+       0        0 HTTPOUT    tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            multiport sports 80,443
+
+Chain CUSTOMALLOWIN (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMALLOWOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain CUSTOMDENYOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYIN (1 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPDENYOUT (0 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      13     5623 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain HTTPOUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+      15     1642 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHERIN (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      428 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain OTHEROUT (2 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       3      199 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHIN (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+
+Chain SSHOUT (3 references)
+    pkts      bytes target     prot opt in     out     source               destination         
+       0        0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           
