@@ -11,7 +11,7 @@ function startTestPrompt {
 	echo "START Test $1 $2" >> $filename
 	iptables -L -v -x -n >> $filename
 
-	wireshark -k -i eno16777736 -a duration:10 -w ./Captures/Test"$1".pcapng &
+	wireshark -k -i "$interface" -a duration:10 -w ./Captures/Test"$1".pcapng &
 	sleep 5
 
 }
