@@ -16,7 +16,6 @@ This assignment consists of 3 components:
   - FirewallTest.sh (Runs tests for firewall rules as defined in Assignment 01)
 
 
-This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
 
 ### Version
 0.0.1
@@ -112,13 +111,6 @@ SSH into $remoteIP with username $user and password $password, then execute comm
 
 
 
-
-
-
-License
-----
-
-MIT
 
 
 **PLAN 3 TIMES. START CODING. KEEP PLANNING**
