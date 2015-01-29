@@ -1,4 +1,174 @@
 #!/bin/bash
+
+NOW=$(date +"%m-%d-%Y")
+filename="Logfile$NOW.txt"
+
+
+
+function startTestPrompt {
+	echo "Press any key to START TEST $1 $2 (START YOUR WIRESHARK CAP)"
+	read anykey
+	echo "START Test $1 $2" >> $filename
+	iptables -L -v -x -n >> $filename
+
+	wireshark -k -i eno16777736 -a duration:10 -w ./Captures/Test"$1".pcapng &
+	sleep 5
+
+}
+
+function endTestPrompt {
+	echo "Press any key to END TEST $1 $2 (STOP AND SAVE YOUR WIRESHARK CAP)"
+	read anykey
+	echo "END Test $1" >> $filename
+	iptables -L -v -x -n >> $filename
+}
+
+function installPackages {
+
+	yum  -y install hping3
+
+	yum -y install sshpass
+
+	yum -y install httpd
+
+	echo "Packages installed"
+}
+
+function testDHCP {
+
+	startTestPrompt "$1" ": Allow Inbound/Outbound DHCP" 
+
+
+
+	ifconfig
+
+	echo "Releasing DHCP"
+	dhclient -r
+
+	sleep 3
+
+	echo "DHCP released"
+	ifconfig  
+
+	echo
+	echo "Getting new IP address"
+	dhclient
+
+	sleep 2
+
+	ifconfig 
+
+	endTestPrompt "$1: Allow Inbound/Outbound DHCP" 
+}
+
+function testDNS {
+
+	sleep 2
+
+	startTestPrompt "$1" ": Allow Inbound/Outbound DNS" 
+
+	nslookup www.miniclip.com
+
+	endTestPrompt "$1: Allow Inbound/Outbound DNS"
+}
+
+function testSSH {
+
+	#Test normal operation of SSH
+	startTestPrompt "$1A" ": Allow outbound SSH to a host" 
+
+	sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" ifconfig 
+
+	endTestPrompt "$1A: Allow outbound SSH to a host" 
+
+	#Test inbound SSH
+	startTestPrompt "$1B: Allow inbound SSH to a host" 
+
+	sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 $localIP -S -s 6000 -p 22 -c 5 -k
+
+	endTestPrompt "$1B: Allow inbound SSH to a host" 
+
+}
+
+function testCustomRules {
+
+	#Test incoming drop packets from port 0
+	startTestPrompt "$1A" ": Drop all incoming traffic from port 0" 
+
+	sleep 2
+
+	sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 "$localIP" -S -s 0 -p 80 -c 5 -k
+
+	endTestPrompt "$1A: Drop all incoming traffic from port 0"
+
+	#Test DON'T drop incoming all packets TO 0
+	#startTestPrompt "$1B" ": DON'T drop incoming all packets TO 0" 
+
+	#sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 "$localIP" -S -s 93 -p 0 -c 5 -k
+
+	#endTestPrompt "$1B:DON'T drop incoming all packets TO 0"
+
+	#Test Drop all outgoing packets to 0
+	startTestPrompt "$1C" ":  Drop all outgoing packets to 0" 
+
+	 hping3 "$remoteIP" -S -s 93 -p 0 -c 5  
+
+	endTestPrompt "$1C: Drop all outgoing packets to 0"
+
+	#Test DON'T drop all going from port 0
+	#startTestPrompt "$1D" ":  DON'T Drop all outgoing packets FROM 0" 
+
+	 #hping3 "$remoteIP" -S -s 0 -p 80 -c 5  
+
+	#endTestPrompt "$1D: DON't Drop all outgoing packets from 0"
+}
+
+function testDeniedHTTP {
+
+	#Drop inbound packets to port 80 on ports 1-1024
+	startTestPrompt "$1A" ": Drop all incoming traffic TO port 80 from ports 1-1024" 
+
+	sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 "$localIP" -S -s 1019 -p 80 -c 5 
+
+	endTestPrompt "$1A: Drop all incoming traffic TO port 80 from ports 1-1024"
+
+	#DONT Drop inbound packets to port 80 on ports !1-1024
+	startTestPrompt "$1B" ": DON'T drop all incoming traffic TO port 80 from ports !1-1024" 
+
+	sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 "$localIP" -S -s 1027 -p 80 -c 5  
+
+	endTestPrompt "$1B: DON'T drop all incoming traffic TO port 80 from ports !1-1024"
+
+}
+
+function testHTTP {
+
+	#Test Outbound HTTP
+	startTestPrompt "$1A" ": Allow outbound HTTP" 
+
+	hping3 www.google.com -S -s 2354 -p 80 -c 5
+
+	endTestPrompt "$1A: Allow outbound HTTP"
+
+	#Test Inbound HTTP
+	startTestPrompt "$1B: Allow inbound HTTP"
+
+	service httpd restart 
+
+	sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 "$localIP" -S -s 6000 -p 80 -c 5 -k
+
+	endTestPrompt "$1B: Allow inbound HTTP"
+
+}
+
+#function testCustomHTTPrules {
+
+	
+#}
+
+
+
+
 clear
 echo "PLEASE MAKESURE YOU RUN THIS AS ROOT"
 
@@ -18,17 +188,25 @@ read resetfirewallscript
 
 sh $resetfirewallscript
 
-echo "What is the IP of the machine you will be using to SSH into? 192.168.0.XX"
+echo "What is the IP of the machine you will be using to SSH into?"
 
-read remote
+read remoteIP
 
-remoteIP="192.168.0.$remote"
+echo "What is the name of your NIC interface?"
+
+read interface
 
 echo "What is the IP of YOUR machine? 192.168.0.XX"
 
-read loc
+read localIP
 
-localIP="192.168.0.$loc"
+echo "What is the user account to use for ssh'ing? (usually ROOT)"
+
+read user
+
+echo "What is the SSH password?"
+
+read password
 
 ## IPS FINISHED
 
@@ -36,124 +214,30 @@ echo "The remote IP to connect to is $remoteIP"
 
 echo "The IP of the remote machine you will be using to SSH into is $remoteIP"
 
-filename="Logfile.txt"
 
 
-echo "Installing HPING3 if you don't have it"
-
-yum  -y install hping3
-
-yum -y install sshpass
-
-yum -y install httpd
-
-echo "Yum installed"
+installPackages
 
 # START FIREWALL
-
 sh $firewallscript
 
 
-echo "Press any key to START TEST 1 Allow Outbound/Inbound DHCP (START YOUR WIRESHARK CAP)"
-read anykey
+testDHCP 1
 
-echo "**Test 1: Allow inbound/outbound DHCP**\n" >> $filename
+testDNS 2
 
-ifconfig em1
+testSSH 3
 
-echo "Releasing DHCP"
-dhclient -r
+testCustomRules 4
 
-sleep 3
+testDeniedHTTP 5
 
-echo "DHCP released"
-ifconfig em1 
+testHTTP 6
 
-echo
-echo "Getting new IP address"
-dhclient
-
-sleep 3
-
-ifconfig em1
-
-echo "Press any key to FINISH TEST 1 (DHCP) (SAVE YOUR WIRESHARK STUFF)"
-read anykey
-#iptables -L -v >> $filename
-echo
-
-
-echo "Press any key to START TEST  2 inbound/outbound DNS (START YOUR WIRESHARK CAP)"
-read anykey
-echo "**Test 2: Allow inbound/outbound DNS**" >> $filename
-
-nslookup www.google.com
-
-#iptables -L -v >> $filename
-
-echo "Press any key to FINISH TEST 2 (DNS) (SAVE YOUR WIRESHARK CAP)"
-read anykey
-
-echo
-
-echo "Press any key to START TEST 3 Outbound/inbound SSH (START YOUR WIRESHARK CAP)"
-read anykey
-echo "**Test 3A: Allow outbound SSH **" >> $filename
-sshpass -p "uest1onQ?" ssh -o StrictHostKeyChecking=no root@"$remoteIP" ifconfig em1
-
-iptables -L -v >> $filename
-echo  "FINISHED SSHING TEST 3A"
-
-echo "**Test 3A: Allow inbound SSH **" >> $filename
-echo "Press any key to START TEST 3B inbound SSH (START YOUR WIRESHARK CAP)"
-read anykey
-
-echo "**Test 3B: Allow incoming SSH **" >> $filename
-sshpass -p "uest1onQ?" ssh -o StrictHostKeyChecking=no root@"$remoteIP" hping3 "$localIP" -S -s 22 -p 22 -c 15
-
-iptables -L -v >> $filename
-
-echo "Press any key to FNISH TEST SSH 3B (INBOUND SSH) (SAVE YOUR WIRESHARK CAP)"
-read anykey
-
-
-echo "Press any key to START TEST 4 Outbound HTTP (START YOUR WIRESHARK CAP)"
-read anykey
-echo "**Test 4A: Allow outbound HTTP **" >> $filename
-hping3 www.tratnayake.me -p 80 -s 80 -c 15
-
-iptables -L -v >> $filename
-echo
-echo "Press any key to FINISH TEST  --TAKE A SCREENSHOT OF THE SITE (www.tratnayake.me) -- (SAVE YOUR WIRESHARK CAP)"
-read anykey
-
-
-echo "Press any key to START TEST 4B (Inbound HTTP) (START YOUR WIRESHARK CAP)"
-read anykey
-
-service httpd start
-echo "Starting your server";
-echo "Inbound from a port 1021, SHOULD BE DROP" >>$filename
-sshpass -p "uest1onQ?" ssh -o StrictHostKeyChecking=no root@"$remoteIP" hping3 "$localIP" -S -s 1021 -p 80 -c 5 -k
-echo "Inbound from a port 1021, SHOULD BE ACCEPT" >>$filename
-sshpass -p "uest1onQ?" ssh -o StrictHostKeyChecking=no root@"$remoteIP" hping3 "$localIP" -S -s 1025 -p 80 -c 5 -k
-
-echo "Press any key to FINISH TEST 4 (Inbound HTTP) take a picture of your server from the other computer. (START YOUR WIRESHARK CAP)"
-read anykey
-
-
-function startTestPrompt {
-	echo "Press any key to START TEST $1 (START YOUR WIRESHARK CAP)"
-read anykey
-}
-
-function endTestPrompt {
-	echo "Press any key to END TEST $1 (STOP AND SAVE YOUR WIRESHARK CAP)"
-read anykey
-}
-
+echo "ALL TESTS COMPLETE!"
 
 #sh ResetFirewall.sh
+
 
 
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-date=date
-filename="Logfile$date.txt"
+NOW=$(date +"%m-%d-%Y")
+filename="Logfile$NOW.txt"
 
 
 
@@ -98,17 +98,15 @@ function testCustomRules {
 	sleep 2
 
 	sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 "$localIP" -S -s 0 -p 80 -c 5 -k
-	
-echo "Finished SSHing"
 
 	endTestPrompt "$1A: Drop all incoming traffic from port 0"
 
 	#Test DON'T drop incoming all packets TO 0
-	startTestPrompt "$1B" ": DON'T drop incoming all packets TO 0" 
+	#startTestPrompt "$1B" ": DON'T drop incoming all packets TO 0" 
 
-	sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 "$localIP" -S -s 93 -p 0 -c 5 -k
+	#sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$user"@"$remoteIP" hping3 "$localIP" -S -s 93 -p 0 -c 5 -k
 
-	endTestPrompt "$1B:DON'T drop incoming all packets TO 0"
+	#endTestPrompt "$1B:DON'T drop incoming all packets TO 0"
 
 	#Test Drop all outgoing packets to 0
 	startTestPrompt "$1C" ":  Drop all outgoing packets to 0" 
@@ -118,11 +116,11 @@ echo "Finished SSHing"
 	endTestPrompt "$1C: Drop all outgoing packets to 0"
 
 	#Test DON'T drop all going from port 0
-	startTestPrompt "$1D" ":  DON'T Drop all outgoing packets FROM 0" 
+	#startTestPrompt "$1D" ":  DON'T Drop all outgoing packets FROM 0" 
 
-	 hping3 "$remoteIP" -S -s 0 -p 80 -c 5  
+	 #hping3 "$remoteIP" -S -s 0 -p 80 -c 5  
 
-	endTestPrompt "$1D: DON't Drop all outgoing packets from 0"
+	#endTestPrompt "$1D: DON't Drop all outgoing packets from 0"
 }
 
 function testDeniedHTTP {
@@ -231,17 +229,19 @@ installPackages
 sh $firewallscript
 
 
-#testDHCP 1
+testDHCP 1
 
-#testDNS 2
+testDNS 2
 
-#testSSH 3
+testSSH 3
 
 testCustomRules 4
 
 testDeniedHTTP 5
 
 testHTTP 6
+
+echo "ALL TESTS COMPLETE!"
 
 #sh ResetFirewall.sh
 
