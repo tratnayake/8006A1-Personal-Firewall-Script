@@ -185,7 +185,7 @@ firewallscript="Firewall.sh"
 remoteIP="192.168.57.139"
 localIP="192.168.57.138"
 user="root"
-password="lalaland"
+password="PASSWORD"
 interface="eno15777736"
 #echo "What is the name of your Firewall script?"
 
